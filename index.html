@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial QA - Pipe Quality Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation Header -->
+        <header class="sidebar">
+            <div class="logo">PIPE<span>SCAN AI</span></div>
+            <nav>
+                <div class="nav-item active">🔬 Inspection Hub</div>
+            </nav>
+            <div class="system-status">
+                <span class="status-dot online"></span> System API Online
+            </div>
+        </header>
+
+        <!-- Main Analytics HUD Pane -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Automated Quality Assurance</h1>
+                <p>Upload pipe cross-section scans for instant validation.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Dropzone Upload Panel Area -->
+                <section class="card upload-card">
+                    <h2>Scanned Image Source</h2>
+                    <div class="drop-zone" id="dropZone">
+                        <div class="drop-zone-prompt">
+                            <div class="upload-icon">📁</div>
+                            <p>Drag & drop inspection image or <span>Browse Files</span></p>
+                            <input type="file" id="fileInput" accept="image/*" hidden>
+                        </div>
+                        <img src="" id="imagePreview" alt="Preview" hidden>
+                    </div>
+                    <button id="scanBtn" class="btn btn-primary" disabled>Analyze Labeled Batch</button>
+                </section>
+
+                <!-- Dynamic Real-Time Results Output Analytics Panel -->
+                <section class="card results-card">
+                    <h2>AI Inspection Analytics</h2>
+                    <div class="result-display IDLE" id="resultDisplay">
+                        <div class="result-title" id="resTitle">READY FOR SCAN</div>
+                        <div class="result-meta" id="resMeta">Upload an image to trigger network inference layers.</div>
+                    </div>
+                    
+                    <div class="metrics-list">
+                        <div class="metric-item">
+                            <span class="metric-label">Confidence Rating</span>
+                            <span class="metric-value" id="confidenceVal">--%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Filename</span>
+                            <span class="metric-value" id="filenameVal">None</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
