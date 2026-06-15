@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function handleFileSelection(file) {
-        if (!file.type.startsWith("image/")) {
+        if (file && !file.type.startsWith("image/")) {
             alert("Please upload a valid inspection image file.");
             return;
         }

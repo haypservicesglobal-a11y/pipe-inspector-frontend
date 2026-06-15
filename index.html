@@ -31,13 +31,14 @@
                 <section class="card upload-card">
                     <h2>Scanned Image Source</h2>
                     <div class="drop-zone" id="dropZone">
-                        <div class="drop-zone-prompt">
-                            <div class="upload-icon">📁</div>
-                            <p>Drag & drop inspection image or <span>Browse Files</span></p>
-                            <input type="file" id="fileInput" accept="image/*" hidden>
-                        </div>
-                        <img src="" id="imagePreview" alt="Preview" hidden>
-                    </div>
+    <div class="drop-zone-prompt" id="promptText">
+        <div class="upload-icon">📁</div>
+        <p>Drag & drop inspection image or <span id="browseLink" style="color: #00d2ff; font-weight: 600; text-decoration: underline; cursor: pointer;">Browse Files</span></p>
+    </div>
+    <!-- The file input is now visible as a backup if styling breaks -->
+    <input type="file" id="fileInput" accept="image/*" style="margin-top: 15px;">
+    <img src="" id="imagePreview" alt="Preview" hidden>
+</div>
                     <button id="scanBtn" class="btn btn-primary" disabled>Analyze Labeled Batch</button>
                 </section>
 
