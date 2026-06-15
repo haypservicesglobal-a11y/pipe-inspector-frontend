@@ -13,19 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let activeFile = null;
 
-    // Direct click trigger wrapper
-    dropZone.addEventListener("click", (e) => {
-        if (e.target !== fileInput) {
-            fileInput.click();
-        }
+    // Trigger the hidden file selector when the drop zone is clicked
+    dropZone.addEventListener("click", () => {
+        fileInput.click();
     });
 
+    // Handle file selection from file dialog
     fileInput.addEventListener("change", (e) => {
         if (e.target.files && e.target.files.length > 0) {
-            processSelectedFile(e.target.files[0]); // 🎯 FIX: Pass the first file object explicitly
+            processFile(e.target.files[0]);
         }
     });
 
+    // Handle drag and drop events
     dropZone.addEventListener("dragover", (e) => {
         e.preventDefault();
         dropZone.style.borderColor = "#00d2ff";
@@ -39,14 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         dropZone.style.borderColor = "#2c2c35";
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            processSelectedFile(e.dataTransfer.files[0]); // 🎯 FIX: Pass the first dropped file object explicitly
-            fileInput.files = e.dataTransfer.files;
+            processFile(e.dataTransfer.files[0]);
+            fileInput.files = e.dataTransfer.files; // Keep input element synchronized
         }
     });
 
-    function processSelectedFile(file) {
-        if (!file || !file.type.startsWith("image/")) {
-            alert("⚠️ Please upload a valid inspection image file (JPG, PNG, WEBP).");
+    function processFile(file) {
+        if (!file.type.startsWith("image/")) {
+            alert("⚠️ Please select a valid image file (JPG, PNG, WEBP).");
             return;
         }
 
@@ -61,24 +61,21 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         reader.readAsDataURL(file);
         
-        // 🚀 FORCE UNLOCK STATE: Light up button visually and functionally
-        scanBtn.disabled = false;
+        // Dynamic UI style update to make the button fully clickable
         scanBtn.style.opacity = "1";
         scanBtn.style.cursor = "pointer";
         
+        // Reset status message boxes
         resultDisplay.className = "result-display IDLE";
         resTitle.textContent = "READY TO SCAN";
         resMeta.textContent = "Click button below to execute AI classification layers.";
         confidenceVal.textContent = "--%";
     }
 
+    // Process API inference execution on button click
     scanBtn.addEventListener("click", async () => {
-        if (!activeFile) {
-            alert("Please select or drop an image first!");
-            return;
-        }
+        if (!activeFile) return;
 
-        scanBtn.disabled = true;
         scanBtn.textContent = "PROCESSING AI INFERENCE...";
         resTitle.textContent = "SCANNING...";
 
@@ -98,21 +95,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 resMeta.textContent = data.status === "PASSED" ? "Pipe conforms to verified manufacturing rules." : "Pipe flagged as defective / counterfeit.";
                 confidenceVal.textContent = `${data.confidence_percentage}%`;
             } else {
-                showNetworkError(`Server Error: ${response.status}`);
+                showError(`Server Error: ${response.status}`);
             }
         } catch (error) {
-            console.error("Network Fetch Failure:", error);
-            showNetworkError("Connection Blocked / Offline");
+            console.error("Fetch API error detail:", error);
+            showError("Connection Blocked / Offline");
         } finally {
-            scanBtn.disabled = false;
             scanBtn.textContent = "Analyze Labeled Batch";
         }
     });
 
-    function showNetworkError(message) {
+    function showError(message) {
         resultDisplay.className = "result-display REJECTED";
         resTitle.textContent = message.toUpperCase();
-        resMeta.textContent = "Ensure your local uvicorn server window is active on port 8000.";
+        resMeta.textContent = "Verify your local uvicorn server window is active on port 8000.";
         confidenceVal.textContent = "0.00%";
     }
 });

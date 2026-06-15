@@ -8,18 +8,12 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar Navigation Header -->
         <header class="sidebar">
             <div class="logo">PIPE<span>SCAN AI</span></div>
-            <nav>
-                <div class="nav-item active">🔬 Inspection Hub</div>
-            </nav>
-            <div class="system-status">
-                <span class="status-dot online"></span> System API Online
-            </div>
+            <nav><div class="nav-item active">🔬 Inspection Hub</div></nav>
+            <div class="system-status"><span class="status-dot online"></span> System API Active</div>
         </header>
 
-        <!-- Main Analytics HUD Pane -->
         <main class="main-content">
             <div class="dashboard-header">
                 <h1>Automated Quality Assurance</h1>
@@ -27,29 +21,28 @@
             </div>
 
             <div class="dashboard-grid">
-                <!-- Dropzone Upload Panel Area -->
+                <!-- Dropzone Section -->
                 <section class="card upload-card">
                     <h2>Scanned Image Source</h2>
-                    <div class="drop-zone" id="dropZone">
-    <div class="drop-zone-prompt" id="promptText">
-        <div class="upload-icon">📁</div>
-        <p>Drag & drop inspection image or <span id="browseLink" style="color: #00d2ff; font-weight: 600; text-decoration: underline; cursor: pointer;">Browse Files</span></p>
-    </div>
-    <!-- The file input is now visible as a backup if styling breaks -->
-    <input type="file" id="fileInput" accept="image/*" style="margin-top: 15px;">
-    <img src="" id="imagePreview" alt="Preview" hidden>
-</div>
-                    <button id="scanBtn" class="btn btn-primary">Analyze Labeled Batch</button>
+                    <div class="drop-zone" id="dropZone" style="cursor: pointer;">
+                        <div class="drop-zone-prompt" id="promptText">
+                            <div class="upload-icon">📁</div>
+                            <p>Drag & drop inspection image or <span style="color: #00d2ff; font-weight: 600; text-decoration: underline;">Browse Files</span></p>
+                        </div>
+                        <img src="" id="imagePreview" alt="Preview" hidden style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <!-- Single Hidden Input Managed Natively by Label/Click Engine -->
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <button id="scanBtn" class="btn btn-primary" style="opacity: 0.5; cursor: not-allowed;">Analyze Labeled Batch</button>
                 </section>
 
-                <!-- Dynamic Real-Time Results Output Analytics Panel -->
+                <!-- Results Section -->
                 <section class="card results-card">
                     <h2>AI Inspection Analytics</h2>
                     <div class="result-display IDLE" id="resultDisplay">
                         <div class="result-title" id="resTitle">READY FOR SCAN</div>
                         <div class="result-meta" id="resMeta">Upload an image to trigger network inference layers.</div>
                     </div>
-                    
                     <div class="metrics-list">
                         <div class="metric-item">
                             <span class="metric-label">Confidence Rating</span>
@@ -64,5 +57,6 @@
             </div>
         </main>
     </div>
+    <script src="app.js"></script>
 </body>
 </html>
