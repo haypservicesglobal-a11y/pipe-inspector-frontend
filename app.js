@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("file", activeFile);
 
         try {
-            const response = await fetch("https://pipe-inspector-backend-production.up.railway.app", {
+            const response = await fetch("https://pipe-inspector-backend-production.up.railway.app/predict", {
                 method: "POST",
                 body: formData
             });
